@@ -2,8 +2,8 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "hw1.h"
+using namespace algebra;
 
-/*
 TEST(HW1Test, ZEROS) {
     Matrix matrix{algebra::zeros(5, 6)};
 
@@ -285,82 +285,78 @@ TEST(HW1Test, CONCATENATE2) {
     EXPECT_DOUBLE_EQ(matrix[1][3], matrix2[1][0]);
 }
 
-TEST(HW1Test, ERO_SWAP) {
-    // Caution: r1 or r2 inputs are out of range
-    EXPECT_THROW(algebra::ero_swap(Matrix{{1, 2}}, 0, 1), std::logic_error);
+// TEST(HW1Test, ERO_SWAP) {
+//     // Caution: r1 or r2 inputs are out of range
+//     EXPECT_THROW(algebra::ero_swap(Matrix{{1, 2}}, 0, 1), std::logic_error);
 
-    // test case
-    Matrix matrix{algebra::random(4, 3, 0, 4)};
-    Matrix swap{algebra::ero_swap(matrix, 2, 3)};
+//     // test case
+//     Matrix matrix{algebra::random(4, 3, 0, 4)};
+//     Matrix swap{algebra::ero_swap(matrix, 2, 3)};
 
-    // check the swap
-    EXPECT_TRUE(swap[0] == matrix[0]);
-    EXPECT_TRUE(swap[1] == matrix[1]);
-    EXPECT_TRUE(swap[2] == matrix[3]);
-    EXPECT_TRUE(swap[3] == matrix[2]);
-}
+//     // check the swap
+//     EXPECT_TRUE(swap[0] == matrix[0]);
+//     EXPECT_TRUE(swap[1] == matrix[1]);
+//     EXPECT_TRUE(swap[2] == matrix[3]);
+//     EXPECT_TRUE(swap[3] == matrix[2]);
+// }
 
-TEST(HW1Test, ERO_MULTIPLY) {
-    Matrix matrix{algebra::random(4, 3, 0, 4)};
-    Matrix ero{algebra::ero_multiply(matrix, 2, 1.5)};
+// TEST(HW1Test, ERO_MULTIPLY) {
+//     Matrix matrix{algebra::random(4, 3, 0, 4)};
+//     Matrix ero{algebra::ero_multiply(matrix, 2, 1.5)};
 
-    EXPECT_TRUE(ero[0] == matrix[0]);
-    EXPECT_TRUE(ero[1] == matrix[1]);
-    EXPECT_TRUE(ero[3] == matrix[3]);
+//     EXPECT_TRUE(ero[0] == matrix[0]);
+//     EXPECT_TRUE(ero[1] == matrix[1]);
+//     EXPECT_TRUE(ero[3] == matrix[3]);
 
-    // check the value of the elements
-    for (size_t i{}; i < ero[2].size(); i++)
-        EXPECT_NEAR(ero[2][i], matrix[2][i]*1.5, 0.03);
-}
+//     // check the value of the elements
+//     for (size_t i{}; i < ero[2].size(); i++)
+//         EXPECT_NEAR(ero[2][i], matrix[2][i]*1.5, 0.03);
+// }
 
-TEST(HW1Test, ERO_SUM) {
-    Matrix matrix{algebra::random(4, 3, 0, 4)};
-    Matrix ero{algebra::ero_sum(matrix, 0, 2, 3)};
+// TEST(HW1Test, ERO_SUM) {
+//     Matrix matrix{algebra::random(4, 3, 0, 4)};
+//     Matrix ero{algebra::ero_sum(matrix, 0, 2, 3)};
 
-    EXPECT_TRUE(ero[0] == matrix[0]);
-    EXPECT_TRUE(ero[1] == matrix[1]);
-    EXPECT_TRUE(ero[2] == matrix[2]);
+//     EXPECT_TRUE(ero[0] == matrix[0]);
+//     EXPECT_TRUE(ero[1] == matrix[1]);
+//     EXPECT_TRUE(ero[2] == matrix[2]);
 
-    // check the value of the elements
-    for (size_t i{}; i < ero[3].size(); i++)
-        EXPECT_NEAR(ero[3][i], matrix[0][i]*2+matrix[3][i], 0.03);
-}
+//     // check the value of the elements
+//     for (size_t i{}; i < ero[3].size(); i++)
+//         EXPECT_NEAR(ero[3][i], matrix[0][i]*2+matrix[3][i], 0.03);
+// }
 
-TEST(HW1Test, UPPER_TRIANGULAR1) {
-    // Caution: empty matrix
-    EXPECT_TRUE(algebra::upper_triangular(Matrix{}).empty());
+// TEST(HW1Test, UPPER_TRIANGULAR1) {
+//     // Caution: empty matrix
+//     EXPECT_TRUE(algebra::upper_triangular(Matrix{}).empty());
 
-    // Caution: non-square matrices have no upper triangular form
-    EXPECT_THROW(algebra::upper_triangular(Matrix{{1, 2, 3}, {4, 5, 6}}), std::logic_error);
+//     // Caution: non-square matrices have no upper triangular form
+//     EXPECT_THROW(algebra::upper_triangular(Matrix{{1, 2, 3}, {4, 5, 6}}), std::logic_error);
 
-    // test case 1
-    Matrix matrix1{{1, 2}, {5, 7}};
-    Matrix res1{algebra::upper_triangular(matrix1)};
-    EXPECT_NEAR(res1[0][0], 1, 0.03);
-    EXPECT_NEAR(res1[1][0], 0, 0.03);
-    EXPECT_NEAR(res1[1][1], -3, 0.03);
+//     // test case 1
+//     Matrix matrix1{{1, 2}, {5, 7}};
+//     Matrix res1{algebra::upper_triangular(matrix1)};
+//     EXPECT_NEAR(res1[0][0], 1, 0.03);
+//     EXPECT_NEAR(res1[1][0], 0, 0.03);
+//     EXPECT_NEAR(res1[1][1], -3, 0.03);
 
-    // test case 2
-    Matrix matrix2{{1, 2, 3}, {4, 7, 5}, {6, 1, 3}};
-    Matrix res2{algebra::upper_triangular(matrix2)};
-    EXPECT_NEAR(res2[0][0], 1, 0.03);
-    EXPECT_NEAR(res2[1][0], 0, 0.03);
-    EXPECT_NEAR(res2[2][0], 0, 0.03);
-    EXPECT_NEAR(res2[2][1], 0, 0.03);
-    EXPECT_NEAR(res2[2][2], 62, 0.03);
-}
+//     // test case 2
+//     Matrix matrix2{{1, 2, 3}, {4, 7, 5}, {6, 1, 3}};
+//     Matrix res2{algebra::upper_triangular(matrix2)};
+//     EXPECT_NEAR(res2[0][0], 1, 0.03);
+//     EXPECT_NEAR(res2[1][0], 0, 0.03);
+//     EXPECT_NEAR(res2[2][0], 0, 0.03);
+//     EXPECT_NEAR(res2[2][1], 0, 0.03);
+//     EXPECT_NEAR(res2[2][2], 62, 0.03);
+// }
 
-TEST(HW1Test, BONUS) {
-    // test case
-    Matrix matrix2{{0, 2, 3}, {4, 7, 5}, {6, 1, 3}};
-    Matrix res2{algebra::upper_triangular(matrix2)};
-    EXPECT_NEAR(res2[0][0], 4, 0.03);
-    EXPECT_NEAR(res2[1][0], 0, 0.03);
-    EXPECT_NEAR(res2[2][0], 0, 0.03);
-    EXPECT_NEAR(res2[2][1], 0, 0.03);
-    EXPECT_NEAR(res2[2][2], 39/4.0, 0.03);
-}
-*/
-
-
-
+// TEST(HW1Test, BONUS) {
+//     // test case
+//     Matrix matrix2{{0, 2, 3}, {4, 7, 5}, {6, 1, 3}};
+//     Matrix res2{algebra::upper_triangular(matrix2)};
+//     EXPECT_NEAR(res2[0][0], 4, 0.03);
+//     EXPECT_NEAR(res2[1][0], 0, 0.03);
+//     EXPECT_NEAR(res2[2][0], 0, 0.03);
+//     EXPECT_NEAR(res2[2][1], 0, 0.03);
+//     EXPECT_NEAR(res2[2][2], 39/4.0, 0.03);
+// }
